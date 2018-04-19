@@ -1,0 +1,5 @@
+<h1><%= @ex.name %> </h1>
+<%= link_to 'Изменить', edit_ex_path(@ex)%>
+<%= link_to 'Удалить', ex_path(@ex), method: :delete, data: { confirm: 'Вы уверины?'}%>
+<p><%= @ex.description%></p>
+<span>Количество повторений:<%= @ex.count%></span>

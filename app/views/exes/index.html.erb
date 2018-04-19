@@ -1,0 +1,5 @@
+<h1>Упражнения</h1>
+<%= link_to 'Новое упражнение', new_ex_path%>
+<% @ex.each do |i| %>
+  <h2> <%= link_to i.name, ex_path(i) %> </h2>
+<% end %>
