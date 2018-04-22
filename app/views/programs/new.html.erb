@@ -1,0 +1,15 @@
+<h1>Новое упражнение</h1>
+
+<%= form_for @program do |f| %>
+  <div class="form-control">
+    <%= f.label 'Название' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form-control">
+    <%= f.label :ex_id %>
+    <%= f.collection_select :ex_id, Ex.order(:name), :id, :name, { include_black: true}, {:multiple => true} %>
+  </div>
+  <div class="form-control">
+    <%= f.submit 'Сохранить' %>
+  </div>
+<% end %>

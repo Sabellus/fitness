@@ -1,0 +1,10 @@
+
+<%= form_for @program do |f| %>
+  <div class="form-control">
+    <%= f.label 'Название' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form-control">
+    <%= f.submit 'Сохранить' %>
+  </div>
+<% end %>
