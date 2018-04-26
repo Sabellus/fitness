@@ -1,11 +1,13 @@
 class ProgramsController < ApplicationController
+  # before_action :set_program, only: [:show, :destroy]
+
   def index
-    @program = Program.all
+    @program = Program.order("created_at DESC")
   end
 
   def show
     @program = Program.find(params[:id])
-    @programex = @program.exes.map{|i| i.name}
+    @programex = @program.exes
     @ex = Ex.all
   end
 
@@ -22,8 +24,18 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def destroy
+    @program = Program.find(params[:id])
+    @program.destroy
+    redirect_to programs_path
+  end
+
   private
+  def set_program
+    @program = Program.find(params[:id])
+  end
+
   def program_params
-    params.require(:program).permit(:name, :ex_id)
+    params.require(:program).permit(:name, ex_ids: [])
   end
 end

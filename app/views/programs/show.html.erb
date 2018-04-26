@@ -1,12 +1,9 @@
 <h1><%= @program.name %> </h1>
-<% @programex.each do |i| %>
-  <h2><%= i %></h2>
-<% end %>
-<select name="cars" multiple>
-  <% @ex.each do |i| %>
-    <option value=<%=i.name%>><%=i.name%></option>
-  <% end %>
-</select>
 <%= link_to 'Изменить', edit_program_path(@program)%>
 <%= link_to 'Удалить', program_path(@program), method: :delete, data: { confirm: 'Вы уверины?'}%>
-
+<% @programex.each do |i| %>
+  <p>Упражнение</p>
+  <h2><%= i.name %></h2>
+  <p>Количество выполнений</p>
+  <h3><%= i.count %></h3>
+<% end %>

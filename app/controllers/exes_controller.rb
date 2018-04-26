@@ -2,7 +2,7 @@ class ExesController < ApplicationController
   before_action :set_ex, only: [:show, :edit, :update, :destroy]
 
   def index
-    @ex = Ex.all
+    @ex = Ex.order("created_at DESC")
   end
   def show
   end
@@ -12,7 +12,7 @@ class ExesController < ApplicationController
   def create
     @ex = Ex.new(ex_params)
     if @ex.save
-      redirect_to @ex
+      redirect_to exes_path
     else
       render :new
     end
