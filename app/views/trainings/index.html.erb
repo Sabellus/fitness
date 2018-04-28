@@ -1,0 +1,6 @@
+<h1>Тренировки</h1>
+<%= link_to 'Новая тренировка', new_training_path%>
+
+<% @training.each do |train|%>
+  <h2> <%= link_to train.name, training_path(train) %> </h2>
+<% end %>

@@ -1,0 +1,22 @@
+<%= form_for @training do |f| %>
+  <div class="form-control">
+    <%= f.label 'Название' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form-control">
+    <%= f.label 'Комментарий' %>
+    <%= f.text_field :comments %>
+  </div>
+  <div class="form-control">
+    <%= f.label 'Количество кругов' %>
+    <%= f.text_field :circle %>
+  </div>
+  <div class="form-control">
+    <%= f.label "Выбор программы:" %><br>
+    <%= f.collection_select :program_id, Program.order(:name), :id, :name, { include_black: true } %>
+  </div>
+
+  <div class="form-control">
+    <%= f.submit 'Сохранить' %>
+  </div>
+<% end %>

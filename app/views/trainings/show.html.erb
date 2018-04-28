@@ -1,0 +1,10 @@
+<h1><%= @training.name %> </h1>
+<%= link_to 'Изменить', edit_training_path(@training)%>
+<%= link_to 'Удалить', training_path(@training), method: :delete, data: { confirm: 'Вы уверины?'}%>
+<h3>Комментарии: <%= @training.comments %> </h3>
+<h3>Количество кругов: <%= @training.circle %> </h3>
+<h3>Дата тренировки:<%= @training.created_at %> </h3>
+
+
+<h3>Программа тренировки:<%= @pro.name %> </h3>
+

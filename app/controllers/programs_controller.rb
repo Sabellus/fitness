@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  # before_action :set_program, only: [:show, :destroy]
+  before_action :set_program, only: [:edit, :destroy, :update]
 
   def index
     @program = Program.order("created_at DESC")
@@ -15,6 +15,16 @@ class ProgramsController < ApplicationController
     @program = Program.new
   end
 
+  def edit
+
+  end
+  def update
+    if @program.update_attributes(program_params)
+      redirect_to @program
+    else
+      render :edit
+    end
+  end
   def create
     @program = Program.new(program_params)
     if @program.save
@@ -25,7 +35,6 @@ class ProgramsController < ApplicationController
   end
 
   def destroy
-    @program = Program.find(params[:id])
     @program.destroy
     redirect_to programs_path
   end
