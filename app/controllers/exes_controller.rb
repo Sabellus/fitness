@@ -5,6 +5,7 @@ class ExesController < ApplicationController
     @ex = Ex.order("created_at DESC")
   end
   def show
+    @exprogram= @ex.programs
   end
   def new
     @ex = Ex.new
