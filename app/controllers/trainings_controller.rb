@@ -2,17 +2,21 @@ class TrainingsController < ApplicationController
   before_action :set_training, only: [:show, :edit, :update, :destroy]
 
   def index
-    @training = Training.all
+    @trainings = Training.all
+
+    respond_to do |format|
+      format.html { render 'index'  }
+      format.json { render json: @trainings.to_json }
+      format.xlsx { render xlsx: 'download', filename: "payments.xlsx"}
+      # format.xlsx { render json: 'sadds' }
+    end
   end
   def show
-    @trainingprogid = @training.program_id
-    puts "Привет", @trainingprogid
-    @pro = Program.find(@trainingprogid)
-    puts @pro
   end
   def new
     @training = Training.new
   end
+
   def create
     @training = Training.new(training_params)
     if @training.save
@@ -21,6 +25,7 @@ class TrainingsController < ApplicationController
       render :new
     end
   end
+
   def edit
   end
   def update
@@ -39,6 +44,6 @@ class TrainingsController < ApplicationController
     @training = Training.find(params[:id])
   end
   def training_params
-    params.require(:training).permit(:name, :comments, :circle, :program_id)
+    params.require(:training).permit(:name, :comments, :circle, :duration, :program_id)
   end
 end

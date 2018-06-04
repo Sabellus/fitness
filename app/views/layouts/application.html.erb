@@ -9,10 +9,17 @@
   </head>
 
   <body>
-    <%= link_to 'Тренировки', trainings_path %>
-    <%= link_to 'Программы тренировок', programs_path %>
-    <%= link_to 'Все упражнения', exes_path %>
-    <%= link_to 'История'%>
+    <%if current_user%>
+
+      <%= link_to 'Тренировки', trainings_path %>
+      <%= link_to 'Программы тренировок', programs_path %>
+      <%= link_to 'Все упражнения', exes_path %>
+      <%= link_to 'История'%>
+      Logges in as <%= current_user.email%>
+    <%else%>
+      <%= link_to "Log_In", login_path%>
+    <%end%>
+
     <%= yield %>
   </body>
 </html>

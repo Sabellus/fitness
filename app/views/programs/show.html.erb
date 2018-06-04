@@ -1,7 +1,7 @@
 <h1><%= @program.name %> </h1>
 <%= link_to 'Изменить', edit_program_path(@program)%>
 <%= link_to 'Удалить', program_path(@program), method: :delete, data: { confirm: 'Вы уверины?'}%>
-<% @programex.each do |i| %>
+<% @program.exes.each do |i| %>
   <p>Упражнение</p>
   <h2><%= i.name %></h2>
   <p>Количество выполнений</p>

@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Training") do |sheet|
+    sheet.add_row ["Название тренировки", "Комментарии","Кругов"]
+    @trainings.each do |training|
+        sheet.add_row [training.name, training.comments, training.circle]
+    end
+end

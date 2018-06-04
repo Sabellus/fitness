@@ -1,8 +1,12 @@
+
 class ExesController < ApplicationController
   before_action :set_ex, only: [:show, :edit, :update, :destroy]
+  def require_login
 
+  end
   def index
     @ex = Ex.order("created_at DESC")
+
   end
   def show
     @exprogram= @ex.programs

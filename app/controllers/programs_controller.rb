@@ -1,23 +1,28 @@
 class ProgramsController < ApplicationController
   before_action :set_program, only: [:edit, :destroy, :update]
 
+  attr_reader :model
+
+  def initialize(model: Program)
+    super()
+    @model = model
+  end
+
   def index
-    @program = Program.order("created_at DESC")
+    @program = model.order("created_at DESC")
   end
 
   def show
-    @program = Program.find(params[:id])
-    @programex = @program.exes
-    @ex = Ex.all
+    @program = model.find(params[:id])
   end
 
   def new
-    @program = Program.new
+    @program = model.new
   end
 
   def edit
-
   end
+
   def update
     if @program.update_attributes(program_params)
       redirect_to @program
@@ -25,8 +30,9 @@ class ProgramsController < ApplicationController
       render :edit
     end
   end
+
   def create
-    @program = Program.new(program_params)
+    @program = model.new(program_params)
     if @program.save
       redirect_to @program
     else
@@ -40,8 +46,9 @@ class ProgramsController < ApplicationController
   end
 
   private
+
   def set_program
-    @program = Program.find(params[:id])
+    @program = model.find(params[:id])
   end
 
   def program_params
