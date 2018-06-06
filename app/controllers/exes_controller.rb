@@ -1,6 +1,7 @@
 
 class ExesController < ApplicationController
   before_action :set_ex, only: [:show, :edit, :update, :destroy]
+  before_action :permission_check, only: [:new, :create, :destroy, :update, :edit]
   def require_login
 
   end
@@ -41,5 +42,11 @@ class ExesController < ApplicationController
   end
   def ex_params
     params.require(:ex).permit(:name, :description, :count)
+  end
+  def permission_check
+    if guest? || current_user? && !current_user.trainer?
+      flash[:alert] = 'Вы не авторизованы для этого действия'
+      redirect_back fallback_location: root_url
+    end
   end
 end

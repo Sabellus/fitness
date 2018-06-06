@@ -1,5 +1,6 @@
 class ProgramsController < ApplicationController
   before_action :set_program, only: [:edit, :destroy, :update]
+  before_action :permission_check, only: [:new, :create, :destroy, :update, :edit]
 
   attr_reader :model
 
@@ -46,6 +47,13 @@ class ProgramsController < ApplicationController
   end
 
   private
+
+  def permission_check
+    if guest? || current_user? && !current_user.trainer?
+      flash[:alert] = 'Вы не авторизованы для этого действия'
+      redirect_back fallback_location: root_url
+    end
+  end
 
   def set_program
     @program = model.find(params[:id])

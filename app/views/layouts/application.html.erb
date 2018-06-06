@@ -9,16 +9,22 @@
   </head>
 
   <body>
-    <%if current_user%>
 
-      <%= link_to 'Тренировки', trainings_path %>
-      <%= link_to 'Программы тренировок', programs_path %>
-      <%= link_to 'Все упражнения', exes_path %>
-      <%= link_to 'История'%>
-      Logges in as <%= current_user.email%>
-    <%else%>
-      <%= link_to "Log_In", login_path%>
-    <%end%>
+    <% flash.each do |key, value| %>
+      <%= content_tag :div, value, class: "flash #{key}" %>
+    <% end %>
+
+    <%= link_to 'Тренировки', trainings_path %>
+    <%= link_to 'Программы тренировок', programs_path %>
+    <%= link_to 'Все упражнения', exes_path %>
+
+    <% if current_user? %>
+      <%# link_to 'История'%>
+      Вы вошли как <%= current_user.name %>
+      <%= link_to "Выход", logout_path%>
+    <% else %>
+      <%= link_to "Вход", login_path%>
+    <% end %>
 
     <%= yield %>
   </body>

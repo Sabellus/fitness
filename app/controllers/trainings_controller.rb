@@ -1,6 +1,6 @@
 class TrainingsController < ApplicationController
   before_action :set_training, only: [:show, :edit, :update, :destroy]
-
+  before_action :permission_check, only: [:new, :create, :destroy, :update, :edit]
   def index
     @trainings = Training.all
 
@@ -45,5 +45,11 @@ class TrainingsController < ApplicationController
   end
   def training_params
     params.require(:training).permit(:name, :comments, :circle, :duration, :program_id)
+  end
+  def permission_check
+    if guest? || current_user? && !current_user.trainer? && !current_user.sportsman?
+      flash[:alert] = 'Вы не авторизованы для этого действия'
+      redirect_back fallback_location: root_url
+    end
   end
 end

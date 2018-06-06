@@ -1,4 +1,4 @@
-require 'net/ldap'
+# require 'net/ldap'
 class SessionsController < ApplicationController
   def new
   end
@@ -13,19 +13,52 @@ class SessionsController < ApplicationController
       :password => "#{params[:password]}"
     )
     if result
-      session[:email] = params[:email]
-      session[:group_id] = result.first.gidnumber
-      redirect_to root_url, notice: 'Logged in!'
-      puts "Authenticated"
+      ldap_user = result.first
+      ldap_id = ldap_user.uidnumber[0]
+      user = User.find_by(ldap_id: ldap_id)
+      if user
+        session[:user_id] = user.id
+        flash[:notice] = 'Успех'
+        redirect_to root_url
+      else
+        role = case ldap_user.gidnumber[0]
+        when '500'
+          :trainer
+        when '501'
+          :sportsman
+        else
+          raise 'no such role'
+        end
+        user_attributes = {
+          email: ldap_user.mail[0],
+          encrypted_password: BCrypt::Password.create(params[:password]),
+          first_name: ldap_user.givenname[0],
+          last_name: ldap_user.sn[0],
+          role: role,
+          ldap_id: ldap_id.to_i,
+        }
+        user = User.new(user_attributes)
+        if user.save
+          session[:user_id] = user.id
+
+          flash[:notice] = 'Успех'
+          redirect_to root_url
+        else
+          session[:user_id] = nil
+          flash[:alert] = 'Проблемы при входе'
+          render :new
+        end
+      end
     else
+      session[:user_id] = nil
+      flash[:alert] = 'Проблемы при входе'
       render :new
-      puts "Authentication FAILED."
     end
   end
 
   def destroy
-    session[:email] = nil
-    session[:group_id] = nil
-    redirect_to root_url, notice: 'Logged out!'
+    session[:user_id] = nil
+    flash[:alert] = 'Вы вышли'
+    redirect_to root_url
   end
 end
