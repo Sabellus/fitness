@@ -1,6 +1,12 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Training") do |sheet|
     sheet.add_row ["Название тренировки", "Комментарии","Кругов"]
+    sheet.sheet_view.pane do |pane|
+          pane.top_left_cell = "B2"
+          pane.state = :frozen_split
+          pane.y_split = 1
+          pane.x_split = 1
+        end
     @trainings.each do |training|
         sheet.add_row [training.name, training.comments, training.circle]
     end

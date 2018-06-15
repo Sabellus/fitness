@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     ldap = Net::LDAP.new
-    ldap.host = "192.168.1.40"
+    ldap.host = "localhost"
     ldap.auth "cn=admin,dc=sab,dc=com", "333111"
     result = ldap.bind_as(
       :base => "ou=user,dc=sab,dc=com",
