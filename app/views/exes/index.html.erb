@@ -1,7 +1,8 @@
 <h1>Упражнения</h1>
 <%= link_to 'Новое упражнение', new_ex_path%>
 <%= render @ex %>
-<%= will_paginate @ex %>
+<%= paginate @ex %>
+<%# <%= page_entries_info @ex %>
 <%# <%= session[:user_id].inspect %>
 <%# <%= current_user.inspect %>
 <%# <%= current_user?.inspect %>

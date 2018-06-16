@@ -7,8 +7,14 @@ class ExesController < ApplicationController
   def require_login
 
   end
+  def initialize
+
+
+  end
   def index
-    @ex = Ex.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+    # @ex = Ex.order("created_at DESC").page params[:page]
+    @result = ActiveRecord::Base.connection.execute("SELECT reltuples::bigint AS estimate FROM pg_class where relname='exes';")
+    @ex = Ex.page(params[:page]).with_custom_count(@result.to_a[0]['estimate']).per(10)
     Axlsx::Package.new do |p|
       p.workbook.add_worksheet(:name => 'DATA') do |sheet|
         sheet.add_row(%w{id name description count created_at updated_at deleted_at})

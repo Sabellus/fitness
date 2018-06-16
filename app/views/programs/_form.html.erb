@@ -6,7 +6,7 @@
 
   <div class="form-control">
     <%= f.label "Выбор упражнения:" %><br>
-    <%= f.collection_select :ex_ids, Ex.order(:name), :id, :name, { include_black: true }, { multiple: true } %>
+    <%= f.collection_select :ex_ids, Ex.limit(50).order(:name), :id, :name, { include_black: true }, { multiple: true } %>
   </div>
 
   <div class="form-control">
