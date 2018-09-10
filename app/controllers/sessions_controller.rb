@@ -26,6 +26,8 @@ class SessionsController < ApplicationController
           :trainer
         when '501'
           :sportsman
+        when '502'
+          :maneger
         else
           raise 'no such role'
         end

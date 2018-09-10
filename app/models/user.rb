@@ -19,7 +19,7 @@
 #
 
 class User < ApplicationRecord
-  enum role: [:sportsman, :trainer]
+  enum role: [:sportsman, :trainer, :maneger]
 
   def name
     "#{first_name} #{last_name}"
